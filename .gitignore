@@ -1,2 +1,8 @@
-*~
-.DS_Store
+# files ending in ~
+**/*~
+
+# .DS_Store
+**/.DS_Store
+
+# Jupyter Checkpoints
+**/.ipynb_checkpoints
