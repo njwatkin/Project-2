@@ -57,8 +57,16 @@ information."
 > - "When using Pew Research Center data, ensure proper attribution by mentioning the source. For example: 'Data from the Pew Research Center, [dataset title], [date of data collection], [URL to dataset].'"
 > - "Include the specific dataset title and the date of data collection."
 
+#Data Implementation
+----
+##Data Implementation: Data Cleaning and Preparation
+Data Cleaning and Preparation is necessary so that we can access our data and implement a functional dataframe for our coding during later stages of Data Implementation and during Data Model Evaluation and Optimization.
 
+This stage of Data Implementation includes feature selection from the ATP questionnaire, detecting and erasing null values, detecting and erasing duplicate entires, and recoding features so that results from analyses are interpretable. A Data Key was generated during this phase to document feature and feature characteristics and guide later coding and interpretation.
 
+This version of the dataframe does not have EVCAR2B (i.e., "How much of a reason is each of the following for why you would consider purchasing and electric vehicle?") as only respondents who indicated they were very likely to purchase an EV were asked EVCAR2B, thereby greatly reducing our sample size.
+
+PLACEHOLDER FOR BLOCKS OF CODE WITH EXPLANATIONS...
 
 
 
