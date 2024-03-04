@@ -66,10 +66,17 @@ This stage of Data Implementation includes feature selection from the ATP questi
 
 This version of the dataframe does not have EVCAR2B (i.e., "How much of a reason is each of the following for why you would consider purchasing and electric vehicle?") as only respondents who indicated they were very likely to purchase an EV were asked EVCAR2B, thereby greatly reducing our sample size.
 
-PLACEHOLDER FOR BLOCKS OF CODE WITH EXPLANATIONS...
+PLACEHOLDER FOR BLOCKS OF CODE WITH EXPLANATIONS AND IMAGES FROM PRESENTATION...
 
+##Data Implementation:  Exploratory Data Analysis and Continued Data Preparation
 
+###Initial Look at Each Feature and Potential Targets¶
 
+We took an inital look at the values and distributions of our features and potential targets with histograms. This "glance" allowed to confirm the accuracy of the recoded response sets and if our primary target ordinal variable of interest, EVCAR2_W108 (i.e., "Next time you purchase a vehicle, how likely are you to seriously consider purchasing an electric vehicle...") was normally distributed. It was
+
+PLACEHOLDER FOR BLOCKS OF CODE WITH EXPLANATIONS AND IMAGES FROM PRESENTATION...
+
+...Continue filling out this README by following the "Main_Code_EVS_WO_EVCAR2B" jupyter file in our Project 2 Github... There are similar headers and details to add till you get to the end of the notebook.  
 
 # Directory Structure
 ---
