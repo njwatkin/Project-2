@@ -47,28 +47,11 @@ COVID and Climate, Energy and the Environment
 
 According to the Pew Research Center:
 
-• "The ATP is Pew Research Center’s nationally representative
-online survey panel. The panel is composed of more than
-10,000 adults selected at random from across the entire U.S."
+• "The ATP is Pew Research Center’s nationally representative online survey panel. The panel is composed of more than 10,000 adults selected at random from across the entire U.S."
 
-• "For the online panel to be truly nationally representative, the
-share of those who do not use the internet must be
-represented on the panel somehow. In 2021, the share of
-non-internet users in the U.S was estimated to be 7%, and
-while this is a relatively small group, its members are quite
-different demographically from those who go online. In its
-early years, the ATP conducted interviews with non-internet
-users via paper questionnaires. However, in 2016, the
-Center switched to providing non-internet households with
-tablets which they could use to take the surveys online. The
-Center works with Ipsos, an international market and opinion
-research organization, to recruit panelists, manage the panel
-and conduct the surveys."
+• "For the online panel to be truly nationally representative, the share of those who do not use the internet must be represented on the panel somehow. In 2021, the share of non-internet users in the U.S was estimated to be 7%, and while this is a relatively small group, its members are quite different demographically from those who go online. In its early years, the ATP conducted interviews with non-internet users via paper questionnaires. However, in 2016, the Center switched to providing non-internet households with tablets which they could use to take the surveys online. The Center works with Ipsos, an international market and opinion research organization, to recruit panelists, manage the panel and conduct the surveys."
 
-• "We (Pew Research Center) make(s) a promise to our panelists to protect their identity.Several checks and balances are in place to make sure that Pew Research Center remains true to its word. Personal identifying information (PII) such as a panelist’s name or county of residence is maintained solely by the core panel administration team and is never made available to the general public. In some cases, additional steps such as data
-swapping – randomly swapping certain values among a
-small number of respondents with similar characteristics for sensitive questions – is also used to protect panelists’
-information."
+• "We (Pew Research Center) make(s) a promise to our panelists to protect their identity. Several checks and balances are in place to make sure that Pew Research Center remains true to its word. Personal identifying information (PII) such as a panelist’s name or county of residence is maintained solely by the core panel administration team and is never made available to the general public. In some cases, additional steps such as data swapping – randomly swapping certain values among a small number of respondents with similar characteristics for sensitive questions – is also used to protect panelists’ information."
 
 Database:  https://www.pewresearch.org/american-trends-panel-datasets/
 
@@ -82,9 +65,9 @@ Database:  https://www.pewresearch.org/american-trends-panel-datasets/
 ##Data Implementation: Data Cleaning and Preparation
 Data Cleaning and Preparation is necessary so that we can access our data and implement a functional dataframe for our coding during later stages of Data Implementation and during Data Model Evaluation and Optimization.
 
-This stage of Data Implementation includes feature selection from the ATP questionnaire, detecting and erasing null values, detecting and erasing duplicate entires, and recoding features so that results from analyses are interpretable. A Data Key was generated during this phase to document feature and feature characteristics and guide later coding and interpretation.
+This stage of Data Implementation includes feature selection from the ATP questionnaire, detecting, and erasing null values, detecting and removing duplicate entries, and recoding features so that results from analyses are interpretable. A Data Key was generated during this phase to document feature and feature characteristics and guide later coding and interpretation.
 
-This version of the dataframe does not have EVCAR2B (i.e., "How much of a reason is each of the following for why you would consider purchasing and electric vehicle?") as only respondents who indicated they were very likely to purchase an EV were asked EVCAR2B, thereby greatly reducing our sample size.
+The version of the dataframe used in the analysis does not have EVCAR2B (i.e., "How much of a reason is each of the following for why you would consider purchasing and electric vehicle?") as only respondents who indicated they were very likely to purchase an EV were asked EVCAR2B, thereby greatly reducing our sample size.
 
 <pre><code>
 #Setup dependencies and create encoder and standardscaler instances for all Data Implementation stages
@@ -161,7 +144,7 @@ EV_df_original_1B[['EVCAR1_W108','ENVRMPCT_a_W108','ENVRMPCT_b_W108','ENVRMPCT_c
 #Recode feature with 1= "Expand alt.energy" support and 2= "Expand fossil fuels" responses so 2=0 and 1=1
 EV_df_original_1B['EN1_W108'] = EV_df_original_1B['EN1_W108'].replace([2, 1], [0, 1]
 #Reverse features so a higher label (i.e., most, all, very) is a higher numeric score. Converted binary features to 0 and 1 values.
-#for clarity of interpretation and explanation.  We tried the OrdinalEncoding but the original scales for these features 
+#for clarity of interpretation and explanation.  We tried the OrdinalEncoding but the original scales for these features are
 #not in a meaningful order, so we opted to use the replace function.  For clarity of interpretation
 #and explanation, all ordinal variables/questions/items with a 0 value indicated by their label 
 #in the questionnaire were recoded to reflect a 0 value. 
@@ -198,13 +181,13 @@ EV_df_original_1B['EVCAR2_W108'].value_counts()
 
 ##Reset index
 #The reset_index() function is used to reset the index of the DataFrame. 
-#The inplace=True argument means that the change is made directly in the original DataFrame, 
+#The inplace=True argument means that the change is made directly to the original DataFrame, 
 #without creating a new DataFrame.
 #The drop=True argument means that the old index is completely discarded
 
 EV_df_original_1B.reset_index(inplace=True,drop=True)
 
-#OneHotEncode(r) these features to break out nominal values and creat dummy variables.
+#OneHotEncode(r) these features to break out nominal values and create dummy variables.
 #They are broken out and not treated as ordinal because someone who is married is not better/higher in value than
 #a single person, and a someone in the Southeast is not more valuable than someone in the Northwest, and so on.
 
@@ -238,11 +221,11 @@ EV_df_original_1B.info()
 
 ###Initial Look at Each Feature and Potential Targets¶
 
-We took an inital look at the values and distributions of our features and potential targets with histograms. This "glance" allowed to confirm the accuracy of the recoded response sets and if our primary target ordinal variable of interest, EVCAR2_W108 (i.e., "Next time you purchase a vehicle, how likely are you to seriously consider purchasing an electric vehicle...") was normally distributed. EVCAR2_W108 appeared to be platykurtic.  
+We took an initial look at the values and distributions of our features and potential targets with histograms. This "glance" allowed to confirm the accuracy of the recoded response sets and if our primary target ordinal variable of interest, EVCAR2_W108 (i.e., "Next time you purchase a vehicle, how likely are you to seriously consider purchasing an electric vehicle...") was normally distributed. EVCAR2_W108 appeared to be platykurtic.  
 
 <pre><code>
 #Initial look at values and distributions with histograms.  
-Accuracy in recoding?  Imbalances? Eyeshot decent distributions for ordinal data?
+Accuracy in recoding?  Imbalances? Eyeball decent distributions for ordinal data?
 
 for column in EV_df_original_1B:
     plt.figure()  # create a new figure
@@ -257,7 +240,7 @@ plt.show()
 !!!!!!!!EVCAR2_W108_Histogram
 
 ###Normality of EVCAR2_W108
-An earlier histogram of EVCAR2_W108 (i.e., "Next time you purchase a vehicle, how likely are you to seriously consider purchasing and electric vehicle?") indicates that the target variable/EVCAR2_W108 is not normally distributed.  We formally tested EVCAR2_W108 for normality.
+An earlier histogram of EVCAR2_W108 (i.e.,surveying the question, "Next time you purchase a vehicle, how likely are you to seriously consider purchasing and electric vehicle?") indicates that the target variable/EVCAR2_W108 is not normally distributed.  We formally tested EVCAR2_W108 for normality.
 
 <pre><code>
 #Run normality test. We find that EVCAR2_W108 does not have a normal distribution.  It looks like a 
@@ -330,7 +313,7 @@ Name: count, dtype: int64
 </pre>
 
 ###Feature Relevance: Correlations
-Correlations helped us understand the strength of therelationships between a target variable and a feature. Also, by breaking the correlations down into bar charts we could get a better sense of how features varied with their targets. The resulting visuals are also more detailed and useful to audiences. Finally, the breaking down of the correlations into bar charts gave us a better sense of how our selected model(s) would/should perform when they classify their target values.
+Correlations helped us understand the strength of the relationships between a target variable and a feature. Also, by breaking the correlations down into histograms, we could get a better sense of how features varied with their targets. The resulting visuals are also more detailed and easier for audiences to interpret. Finally, the breaking down of the correlations into bar charts gave us a better sense of how our selected model(s) would/should perform when they classify their target values.
 
 <pre><code>
 #Copy is done to avoid modifying the original DataFrame when subsequent operations are 
@@ -460,7 +443,7 @@ plt.legend(bbox_to_anchor=(1.0, 1.0))
 !!!!!!!!EVCAR3_W108 Corr as BChart
 
 ###Feature Interdependence: Variance Inflation Factor
-The Variance Inflaction Factor (VIF) is calculated to find multicollinearity among the selected features/independent variables for our models.
+The Variance Inflation Factor (VIF) is calculated to find multicollinearity among the selected features/independent variables for our models.
 
 <pre><code>
 #Identifying the features/independent variables for VIF
@@ -556,7 +539,7 @@ calc_vif(X).sort_values("VIF")
 We chose EVCAR2_W108 as a target variable because it represents economic viability for EVs in the car industry. Also, it is balanced and though not normally distributed could be transformed.
 ```
 **Model Selection - Gradient Boosting Regression**: 
-Based on our EDA, we will explore gradient boosting regression to account for any non-linear relationships, imbalances in our features, and interdependence. There is an added advantage of gradient boosting regression being robust against any outliers we may have overseen and we did not detect with boxplots. Gradient boosting regression is a type of ensemble learning method where new models are added to correct the errors made by existing models - usually decision trees. As such, no scaling of the data is needed. Models are added sequentially until no further improvements can be made. The "gradient" in "gradient boosting" comes from the fact that the algorithm uses gradient descent to minimize the loss when adding new models.The key hyperparameters of Gradient Boosting Regression include the number of decision trees (controlled by the number of iterations), the depth of the decision trees, and the learning rate. These need to be tuned carefully to avoid overfitting
+Based on our EDA, we will explore gradient boosting regression to account for any non-linear relationships, imbalances in our features, and interdependence. There is an added advantage of gradient boosting regression being robust against any outliers we may have overlooked and we did not detect with boxplots. Gradient boosting regression is a type of ensemble learning method, where new models are added to correct the errors made by existing models - usually decision trees. As such, no scaling of the data is needed. Models are added sequentially until no further improvements can be made. The "gradient" in "gradient boosting" comes from the fact that the algorithm uses gradient descent to minimize the loss when adding new models.The key hyperparameters of Gradient Boosting Regression include the number of decision trees (controlled by the number of iterations), the depth of the decision trees, and the learning rate. These need to be tuned carefully to avoid overfitting
 
 **Features for inclusion based upon correlations and VIF during EDA**: 
 'ENV2_a_W108', 'ENV2_b_W108', 'ENV2_f_W108', 'EN1_W108', 'EVCAR3_W108', 'EVCAR1_W108', 'LOCENV_a_W108', 'LOCENV_d_W108', 'LOCENV_e_W108', 'ENVRMPCT_a_W108', 'ENVRMPCT_b_W108', 'ENVRMPCT_c_W108', 'ENVRMPCT_d_W108', 'ENVRMPCT_e_W108', 'CCPOLICY_e_W108', 'RSTCWRK_e_W108', 'COVID_INFECT_a_W108', 'COVID_INFECT_b_W108', 'GAP21Q12_W108', 'F_METRO', 'F_GENDER', 'F_PARTYSUM_FINAL', 'F_INC_SDT1', 'F_RACETHNMOD_2.0', 'F_RACETHNMOD_3.0', 'F_RACETHNMOD_4.0', 'F_RACETHNMOD_5.0'
@@ -568,9 +551,9 @@ Based on our EDA, we will explore gradient boosting regression to account for an
 
 **Model Selection - Classification Techniques**:
 
-*Random Forest Classifier*: -Our dataset has many features and we don't want to overfitting. -Handles imbalanced data -Feature importance -Bagging subsets of features -Robust to missing values -Versatile to different types of data -Do not need to scale data (decision trees are not affected by scale of data) -Captures non-linear relationships
+*Random Forest Classifier*: -Our dataset has many features and we don't want to overfit. -Handles imbalanced data -Feature importance -Bagging subsets of features -Robust to missing values -Versatile to different types of data -Do not need to scale data (decision trees are not affected by scale of data) -Captures non-linear relationships
 
-*Support Vector Classification (SVC)*: -Our dataset has many features and we don't want to overfitting -Versatile to high dimensionality -Captures non-linear relationships -Multiple kernal boundaries to choose from
+*Support Vector Classification (SVC)*: -Our dataset has many features and we don't want to overfit -Versatile to high dimensionality -Captures non-linear relationships -Multiple kernels to choose from
 
 *K-Nearest Neighbors (KNN)*: -Intuitive and simple: Based on proximity -Captures non-linear relationships -Few hyperparameters -Visual output of the accuracy
 
@@ -581,7 +564,7 @@ Based on our EDA, we will explore gradient boosting regression to account for an
 ----
 **Sensitivity and Precision:
 Based on our EDA, we proposed the following models and evaluation metrics for our analyses.
-Given our secondary research and the recent popular press emphasis on the decline in popularity of EV vehicles, we opted for evaulation metrics that balance sensitivity and precision. That is, we do not want to turn away any customers who would buy an EV but were assumed not to (False Negative - missed sale) or miss out on opportunities that may seem wasteful but are fairly economical (i.e., research, ads, word-of-mouth, test drives, demonstrations, etc...).
+Given our secondary research and the recent popular press emphasis on the decline in popularity of EV vehicles, we opted for the evaluation metrics that balances sensitivity and precision. That is, we do not want to turn away any customers who would buy an EV but were assumed not to (False Negative - missed sale) or miss out on opportunities that may seem wasteful but are fairly economical (i.e., research, ads, word-of-mouth, test drives, demonstrations, etc...).
 ```
 
 ##Data Implementation: Supervised Learning: Gradient Boosting Regression
@@ -621,7 +604,7 @@ def Cal_Evaluation_Metrics (feature,target):
     print(f"Adjusted R^2 Score: {adjusted_r2}")
 </code></pre>
 <pre><code>
-# It is possible that there will be a low R^2 score since there are few features that moderately correlate
+# It is possible that there will be a low R^2 score, since there are few features that moderately correlate
 # and no groups of features that really distinguish one of the responses from all the others.
 # Define features and target variable
 features = ['ENV2_a_W108', 'ENV2_b_W108', 'ENV2_f_W108', 'EN1_W108', 'EVCAR3_W108', 'EVCAR1_W108', 'LOCENV_a_W108',
@@ -647,11 +630,11 @@ Adjusted R^2 Score: 0.5049889144312356
 ###Analyses to assess various iterations of model performance
 
 <pre><code>
-#For social science research an adjusted R squared/coefficient of determination of 50% 
+#For social science research an adjusted R-squared/coefficient of determination of 50% 
 #is fairly high (Online at https://mpra.ub.uni-muenchen.de/115769/
 #MPRA Paper No. 115769, posted 26 Dec 2022 14:32 UTC).  However, we used RandomizedSearchCV
-#to tune our model as it was not as computationally time consuming as GridSearchCV.  However,the best
-#parameters did not improve our adjusted R squared/coefficient of determination.  
+#to tune our model as it was not as computationally time consuming as GridSearchCV.  However, the best
+#parameters did not improve our adjusted R-squared/coefficient of determination.  
 
 # Splitting the data data
 X = EV_df_original_1B[features]
@@ -808,7 +791,7 @@ y_pred = clf.predict(X_test)
 <pre><code>
 #RFC evaluation metrics
 
-#Overall, accuracy scores for the RFC model are high and do not suggest need for optimization at this time.
+#Overall, accuracy scores for the RFC model are high and do not suggest need for optimization.
 
 #ROC AUC stands for "Receiver Operating Characteristic - Area Under Curve".  Our AUC is 0.90.
 #This suggests that our RFC model does a good job of distinguishing between favor and opposition
