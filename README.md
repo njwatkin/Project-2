@@ -17,7 +17,7 @@ After isolating key drivers of intent to purchase an EV, we aimed to find an opt
 *Question 1*:  What consumer attitudes and experiences drive intent to purchase an EV?
 
 
-*Question 2*: Which supervise machine learning models optimally classify consumers' attitudes and beliefs that will shape the future of EVs and the energy sector? 
+*Question 2*: Which supervised machine learning models optimally classify consumers' attitudes and beliefs that will shape the future of EVs and the energy sector? 
 
 
 ##Audience: 
