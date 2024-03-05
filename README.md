@@ -4,7 +4,7 @@ Team Members:  Ryan Busman, Elaine Kwan, Deb Peters, Nick Watkins
 
 ![Presentation_Cover_Image](<Presentation/Images/Project 2 Cover Page.png>)
 
-##Purpose
+#Purpose
 ---
 At the conclusion of Project 1, team members noted that consumers' beliefs and attitudes about electric vehicles (EVs) could have a substantial impact on purchase or intent to purchase an EV.  However, the exploratory data analyses were limited to demographic data that did not probe deeper into consumer attitudes that could influence the decision to purchase an EV. 
 
@@ -12,7 +12,7 @@ For Project 2, we opted to take a deeper dive into the consumer sentiments' that
 
 After isolating key drivers of intent to purchase an EV, we aimed to find an optimal classification model that could accurately predict the future of EVs and the energy sector. 
 
-##Questions
+#Questions
 ---
 *Question 1*:  What consumer attitudes and experiences drive intent to purchase an EV?
 
@@ -20,7 +20,7 @@ After isolating key drivers of intent to purchase an EV, we aimed to find an opt
 *Question 2*: Which supervised machine learning models optimally classify consumers' attitudes and beliefs that will shape the future of EVs and the energy sector? 
 
 
-##Audience: 
+#Audience
 ----
 
 Our project is timely.  Since Project 1 and the beginning of 2024, EV sales have declined and car manufacturers have scaled back on their production of EVs.  
@@ -37,7 +37,7 @@ The car industry is eager to understand how consumers are causing this shift and
 - EV consumers/individual consumers 
 - Mineral extractors and processors
 
-##About the Data:
+#About the Data
 ----
 * __Organization__: Pew Research Center
 * __Panel Provider__:  Ipsos
@@ -45,7 +45,7 @@ The car industry is eager to understand how consumers are causing this shift and
 COVID and Climate, Energy and the Environment
 * __Data collection__:  Field dates: May 2 – May 8, 2022  
 
-According to the Pew Research Center:
+###According to the Pew Research Center:
 
 • "The ATP is Pew Research Center’s nationally representative online survey panel. The panel is composed of more than 10,000 adults selected at random from across the entire U.S."
 
@@ -60,7 +60,7 @@ Database:  https://www.pewresearch.org/american-trends-panel-datasets/
 > - "When using Pew Research Center data, ensure proper attribution by mentioning the source. For example: 'Data from the Pew Research Center, [dataset title], [date of data collection], [URL to dataset].'"
 > - "Include the specific dataset title and the date of data collection."
 
-#Data Implementation
+#About the Data Analysis
 ----
 ##Data Implementation: Data Cleaning and Preparation
 Data Cleaning and Preparation is necessary so that we can access our data and implement a functional dataframe for our coding during later stages of Data Implementation and during Data Model Evaluation and Optimization.
@@ -217,9 +217,9 @@ EV_df_original_1B.info()
 
 ##Data Implementation:  Exploratory Data Analysis and Continued Data Preparation
 ----
-*As part of Data Implementation, we perform EDA to guide feature evaluation, importance, and target selection. These then inform our model selection and evaluation.*
+As part of Data Implementation, we perform EDA to guide feature evaluation, importance, and target selection. These then inform our model selection and evaluation.*
 
-###Initial Look at Each Feature and Potential Targets¶
+###Initial Look at Each Feature and Potential Targets
 
 We took an initial look at the values and distributions of our features and potential targets with histograms. This "glance" allowed to confirm the accuracy of the recoded response sets and if our primary target ordinal variable of interest, EVCAR2_W108 (i.e., "Next time you purchase a vehicle, how likely are you to seriously consider purchasing an electric vehicle...") was normally distributed. EVCAR2_W108 appeared to be platykurtic.  
 
@@ -237,7 +237,7 @@ for column in EV_df_original_1B:
 plt.show()
 </code></pre>
 
-!!!!!!!!EVCAR2_W108_Histogram
+![EVCAR2_W108](<Presentation/Images/EVCAR2_W108_Histogram.png>)
 
 ###Normality of EVCAR2_W108
 An earlier histogram of EVCAR2_W108 (i.e.,surveying the question, "Next time you purchase a vehicle, how likely are you to seriously consider purchasing and electric vehicle?") indicates that the target variable/EVCAR2_W108 is not normally distributed.  We formally tested EVCAR2_W108 for normality.
@@ -338,7 +338,7 @@ sns.heatmap(df_corr[((df_corr>=0.5) | (df_corr<=-0.5))& (df_corr !=1.000)],annot
 plt.show()
 </code></pre>
 
-!!!!!!!!!!!!!!!HEATMAP_FILTERED IMAGE
+![Heatmap_Filtered0.5](<Presentation/Images/Heatmap_Filtered0.5.png>)
 
 <pre><code>
 # print correlation values for EVCAR2_W108 from the correlation matrix. 
@@ -424,7 +424,7 @@ subset_df.plot(kind='hist',column=['EN1_W108', 'EVCAR3_W108', 'CCPOLICY_e_W108']
 plt.legend(bbox_to_anchor=(1.0, 1.0))
 </code></pre>
 
-!!!!!!!!EVCAR2_W108 Corr as BChart
+![EVCAR2_W108_CorrsasBC](<Presentation/Images/EVCAR2_W108_CorrsasBC.png>)
 
 <pre><code>
 # EVCAR3_W108 asks whether someone favors phasing out production of gas car/trucks by 2035.
@@ -440,7 +440,7 @@ subset_df.plot(kind='hist',column=['EN1_W108', 'ENV2_a_W108', 'ENVIR8_e_W108', '
 plt.legend(bbox_to_anchor=(1.0, 1.0))
 </code></pre>
 
-!!!!!!!!EVCAR3_W108 Corr as BChart
+![EVCAR3_W108_CorrsasBC.](<Presentation/Images/EVCAR3_W108_CorrsasBC.png>)
 
 ###Feature Interdependence: Variance Inflation Factor
 The Variance Inflation Factor (VIF) is calculated to find multicollinearity among the selected features/independent variables for our models.
@@ -533,10 +533,10 @@ calc_vif(X).sort_values("VIF")
 | 19 F_METRO | 7.476724 |
 
 ###Model Selection and Model Evaluation Metrics
-####EVCAR2_W108 
-(i.e., asks how likely someone is to purchase an EV in the future) is our first target.
+####*EVCAR2_W108* 
+This question asks how likely someone is to purchase an EV in the future.  It was our first target.
 
-We chose EVCAR2_W108 as a target variable because it represents economic viability for EVs in the car industry. Also, it is balanced and though not normally distributed could be transformed.
+We chose EVCAR2_W108 as a target variable because it represents economic viability for EVs in the car industry. Also, it is balanced. However, it is normally distributed and will need an approach other than linear regression.
 ```
 **Model Selection - Gradient Boosting Regression**: 
 Based on our EDA, we will explore gradient boosting regression to account for any non-linear relationships, imbalances in our features, and interdependence. There is an added advantage of gradient boosting regression being robust against any outliers we may have overlooked and we did not detect with boxplots. Gradient boosting regression is a type of ensemble learning method, where new models are added to correct the errors made by existing models - usually decision trees. As such, no scaling of the data is needed. Models are added sequentially until no further improvements can be made. The "gradient" in "gradient boosting" comes from the fact that the algorithm uses gradient descent to minimize the loss when adding new models.The key hyperparameters of Gradient Boosting Regression include the number of decision trees (controlled by the number of iterations), the depth of the decision trees, and the learning rate. These need to be tuned carefully to avoid overfitting
@@ -545,10 +545,11 @@ Based on our EDA, we will explore gradient boosting regression to account for an
 'ENV2_a_W108', 'ENV2_b_W108', 'ENV2_f_W108', 'EN1_W108', 'EVCAR3_W108', 'EVCAR1_W108', 'LOCENV_a_W108', 'LOCENV_d_W108', 'LOCENV_e_W108', 'ENVRMPCT_a_W108', 'ENVRMPCT_b_W108', 'ENVRMPCT_c_W108', 'ENVRMPCT_d_W108', 'ENVRMPCT_e_W108', 'CCPOLICY_e_W108', 'RSTCWRK_e_W108', 'COVID_INFECT_a_W108', 'COVID_INFECT_b_W108', 'GAP21Q12_W108', 'F_METRO', 'F_GENDER', 'F_PARTYSUM_FINAL', 'F_INC_SDT1', 'F_RACETHNMOD_2.0', 'F_RACETHNMOD_3.0', 'F_RACETHNMOD_4.0', 'F_RACETHNMOD_5.0'
 
 **Evaluation metrics**: R2, Adjusted R2, MSE, RMSE
-----
+```
 ####EVCAR3_W108 
-(i.e., asks whether someone favors phasing out production of gas car/trucks by 2035) is our second (and, backup) target. It represents an outcome of interest because it directly impacts consumer choice (i.e., a future of only EV cars) and the energy sector. We chose EVCAR3_W108 as a target variable because it is balanced, and the features correlated with it are roughly normal.
+This question asks if a respondent favors phasing out production of gas car/trucks by 2035.  It is our second target It is a binary variable either in favor or opposed. It represents an outcome of interest because it directly impacts consumer choice (i.e., a future of only EV cars) and the energy sector. We chose EVCAR3_W108 as a target variable because it is balanced and the features correlated with it are roughly normal in our bar chart distributions of the correlations.
 
+```
 **Model Selection - Classification Techniques**:
 
 *Random Forest Classifier*: -Our dataset has many features and we don't want to overfit. -Handles imbalanced data -Feature importance -Bagging subsets of features -Robust to missing values -Versatile to different types of data -Do not need to scale data (decision trees are not affected by scale of data) -Captures non-linear relationships
@@ -561,11 +562,10 @@ Based on our EDA, we will explore gradient boosting regression to account for an
 'EVCAR2_W108' 'ENV2_a_W108', 'ENV2_b_W108', 'ENV2_f_W108', 'EN1_W108', 'EVCAR3_W108', 'EVCAR1_W108', 'LOCENV_a_W108', 'LOCENV_d_W108', 'LOCENV_e_W108', 'ENVRMPCT_a_W108', 'ENVRMPCT_b_W108', 'ENVRMPCT_c_W108', 'ENVRMPCT_d_W108', 'ENVRMPCT_e_W108', 'CCPOLICY_e_W108', 'RSTCWRK_e_W108', 'COVID_INFECT_a_W108', 'COVID_INFECT_b_W108', 'GAP21Q12_W108', 'F_METRO', 'F_GENDER', 'F_PARTYSUM_FINAL', 'F_INC_SDT1', 'F_RACETHNMOD_2.0', 'F_RACETHNMOD_3.0', 'F_RACETHNMOD_4.0', 'F_RACETHNMOD_5.0'
 
 **Evaluation metrics**: -Classification report -Balanced accuracy to account for imbalanced data -AUC ROC Curve
-----
-**Sensitivity and Precision:
-Based on our EDA, we proposed the following models and evaluation metrics for our analyses.
-Given our secondary research and the recent popular press emphasis on the decline in popularity of EV vehicles, we opted for the evaluation metrics that balances sensitivity and precision. That is, we do not want to turn away any customers who would buy an EV but were assumed not to (False Negative - missed sale) or miss out on opportunities that may seem wasteful but are fairly economical (i.e., research, ads, word-of-mouth, test drives, demonstrations, etc...).
 ```
+####Sensitivity and Precision:  Overall Approach
+Given our secondary research and the recent popular press emphasis on the decline in popularity of EV vehicles, we opted for evaluation metrics that balances sensitivity and precision. That is, we do not want to turn away any customers who would buy an EV but were assumed not to be interest (False Negative - missed sale) or miss out on opportunities that may seem at-first wasteful but are fairly economical and effective (i.e., research, ads, word-of-mouth, test drives, car demonstrations, car shows, etc...).
+
 
 ##Data Implementation: Supervised Learning: Gradient Boosting Regression
 ---
@@ -754,11 +754,13 @@ plt.show()
 25     F_RACETHNMOD_4.0    0.000025
 </pre>
 
-!!!!!!!GBRFI IMAGE
+
+![GBRegFI](<Presentation/Images/GBRegFI.png>)
+
 
 ##Data Implementation: Supervised Learning: Random Forest Classifier
 ---
-###Answering, "Why?"¶
+###Answering, "Why?"
 Analyses to help classify whether consumers favor or oppose phasing out production of gas car/trucks by 2035
 
 <pre><code>
@@ -839,10 +841,10 @@ Balanced Accuracy: 0.8358281118626678
 weighted avg       0.84      0.84      0.84      1570
 </pre>
 
-!!!!!RFC CM  IMAGE
+![RFC_CM](<Presentation/Images/RFC_CM.png>)
 
-!!!!!RFC ROC  IMAGE
 
+![RFC_ROC](<Presentation/Images/RFC_ROC.png>)
 
 <pre><code>
 #Feature importance
@@ -904,12 +906,13 @@ plt.show()
 25     F_RACETHNMOD_4.0    0.005219
 </pre>
 
-!!!RFCFI Image
+
+![RFCFI](<Presentation/Images/RFCFI.png>)
 
 ##Data Implementation: Supervised Learning: Support Vector Classification
 ---
 
-##Answering "Why?"¶
+###Answering "Why?"
 Analyses to help classify whether consumers favor or oppose phasing out production of gas car/trucks by 2035
 
 <pre><code>
@@ -966,7 +969,7 @@ Accuracy with rbf kernel: 0.8363057324840765
 
 ##Data Implementation: Supervised Learning: K-Nearest Neighbors Classification¶
 ---
-##Answering "Why?"
+###Answering "Why?"
 Analyses to help classify whether consumers favor or oppose phasing out production of gas car/trucks by 2035
 
 <pre><code>
@@ -1027,7 +1030,7 @@ k: 17, Train/Test Score: 0.831/0.817
 k: 19, Train/Test Score: 0.829/0.815
 </pre>
 
-!!!!KNN CONVERGE IMAGE
+![KNNConverge](<Presentation/Images/KNNConverge.png>)
 
 <pre><code>
 # Choose the best k, and refit the KNN classifier by using that k value.
@@ -1085,9 +1088,11 @@ Confusion matrix:
  [ 96 611]]
 </pre>
 
-!!!!!KNN_CM goes here
 
-!!!!!KNN_ROC goes here
+![KNN_CM](<Presentation/Images/KNN_CM.png>)
+
+
+![KNN_ROC](<Presentation/Images/KNN_ROC.png>)
 
 <pre>
 #We opted not to optimize the K-nearest neighbors classification given RFC had slightly higher accuracy. 
@@ -1097,8 +1102,7 @@ Confusion matrix:
 
 # Directory Structure
 ---
-- Project-2
-contains subfolders and files
+
 - About_Pew_ATP/
 contains methodology topline and codebook_markedup
 - Code/
